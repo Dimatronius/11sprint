@@ -2,14 +2,14 @@ FROM golang:1.20
 
 WORKDIR /app
 
-COPY . .
-
 COPY go.mod go.sum ./
 
-COPY *.go ./
+RUN go mod download
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /my_app
+COPY . .
 
-CMD ["/my_app"] 
+RUN go build -o main
+
+CMD /app/main
 
 
